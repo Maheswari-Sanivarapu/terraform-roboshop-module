@@ -196,7 +196,7 @@ resource "aws_lb_listener_rule" "listener" {
     }
     condition {
         host_header {
-            values = ["${var.component}.backend-${var.environment}.${var.route53_domain_name}"] #when anyone hits this URL forward to target group
+            values = [local.domain_name] #when anyone hits this URL forward to target group
         }
     }
 }

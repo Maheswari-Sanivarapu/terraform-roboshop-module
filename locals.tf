@@ -9,6 +9,9 @@ locals {
     backend_alb_listener_arn = data.aws_ssm_parameter.backend_alb_listener_arn.value
     frontend_alb_listener_arn = data.aws_ssm_parameter.frontend_alb_listener_arn.value
     alb_listener = "${var.component}" == "frontend" ? local.frontend_alb_listener_arn : local.backend_alb_listener_arn
+    frontend_domain_name = "${var.component}.${var.environment}.${var.route53_domain_name}"
+    backend_domain_name = "${var.component}.backend-${var.environment}.${var.route53_domain_name}"
+    domain_name = "${var.component}" == "frontend" ? frontend_domain_name : backend_domain_name
     common_tags = {
         project = var.project
         environment = var.environment
