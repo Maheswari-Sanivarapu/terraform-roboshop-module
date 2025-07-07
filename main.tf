@@ -188,7 +188,7 @@ resource "aws_autoscaling_policy" "main" {
 }
 
 resource "aws_lb_listener_rule" "listener" {
-    listener_arn = local.backend_alb_listener_arn # getting listener arn
+    listener_arn = local. alb_listener # getting listener arn
     priority     = var.priority
     action {
     type             = "forward"
