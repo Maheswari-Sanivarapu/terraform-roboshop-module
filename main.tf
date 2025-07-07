@@ -43,7 +43,7 @@ resource "terraform_data" "main" {
         type = "ssh"
         user = "ec2-user"
         password = "DevOps321"
-        host = aws_instance.catalogue.private_ip # connecting to the instance through private_ip bcoz catalogue component  is in private subnet
+        host = aws_instance.main.private_ip # connecting to the instance through private_ip bcoz catalogue component  is in private subnet
     }
    
     provisioner "remote-exec" {
@@ -75,7 +75,7 @@ resource "aws_ami_from_instance" "main" {
 }
 
 # terminate the instance
-resource "terraform_data" "main" {
+resource "terraform_data" "main_terminate" {
     triggers_replace = [
         aws_instance.main.id
     ]
