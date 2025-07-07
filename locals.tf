@@ -11,7 +11,7 @@ locals {
     alb_listener = "${var.component}" == "frontend" ? local.frontend_alb_listener_arn : local.backend_alb_listener_arn
     frontend_domain_name = "${var.component}.${var.environment}.${var.route53_domain_name}"
     backend_domain_name = "${var.component}.backend-${var.environment}.${var.route53_domain_name}"
-    domain_name = "${var.component}" == "frontend" ? frontend_domain_name : backend_domain_name
+    domain_name = "${var.component}" == "frontend" ? local.frontend_domain_name : local.backend_domain_name
     common_tags = {
         project = var.project
         environment = var.environment
