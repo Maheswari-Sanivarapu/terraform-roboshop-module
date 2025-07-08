@@ -7,7 +7,7 @@ resource "aws_lb_target_group" "main" {
         healthy_threshold = 2 #Number of consecutive health check successes required before considering a target healthy. The range is 2-10. Defaults to 3.
         interval = 5 # Approximate amount of time, in seconds, between health checks of an individual target. The range is 5-300
         matcher = "200-299" # response code for health check it ranges from 200-299
-        path = local.health # checking the health of the catalogue component
+        path = local.health_check_path # checking the health of the catalogue component
         port = local.tg_port # port which catalogue component is allowed
         timeout = 2 # after hitting the URL before 5 seconds we should get response or it is unhealthy
         unhealthy_threshold = 3 # to check the health of the instane we will use this if the instance fails after 3 attempts then it will mark it as unhealthy
@@ -187,6 +187,7 @@ resource "aws_autoscaling_policy" "main" {
   }
 }
 
+#listener rule
 resource "aws_lb_listener_rule" "listener" {
     listener_arn = local.alb_listener # getting listener arn
     priority     = var.priority
@@ -196,7 +197,7 @@ resource "aws_lb_listener_rule" "listener" {
     }
     condition {
         host_header {
-            values = [local.domain_name] #when anyone hits this URL forward to target group
+            values = [local.request_header_url] #when anyone hits this URL forward to target group
         }
     }
 }
